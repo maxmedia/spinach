@@ -56,5 +56,10 @@ module Spinach
     def self.escape_single_commas(text)
       text.gsub("'", "\\\\'")
     end
+
+    def self.demodulize(klass)
+      klass = klass.name if klass.class == Class
+      klass.to_s.gsub(/^.*\:\:/, "")
+    end
   end
 end

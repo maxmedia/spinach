@@ -68,7 +68,8 @@ module Spinach
     klass = Spinach::Support.camelize(name)
     feature_steps.detect do |feature|
       feature.feature_name.to_s == name.to_s ||
-        feature.name == klass
+        feature.name == klass ||
+        Spinach::Support.demodulize(feature.name) == klass
     end
   end
 end
