@@ -63,9 +63,15 @@ module Spinach
       filenames.map do |filename|
         filename.split(':')
       end.each do |filename, line|
-        feature = Parser.open_file(filename).parse
-        success = FeatureRunner.new(feature, line).run
-        successful = false unless success
+        successful = nil
+        begin
+          feature = Parser.open_file(filename).parse
+          success = FeatureRunner.new(feature, line).run
+          successful = false unless success
+        rescue Racc::ParseError
+          $stderr.puts "Error parsing #{filename}"
+          raise
+        end
       end
 
       Spinach.hooks.run_after_run(successful)
