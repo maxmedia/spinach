@@ -165,7 +165,8 @@ module Spinach
       #
       # @api public
       def execute(step)
-        underscored_step = Spinach::Support.underscore(step.name)
+        step_name = step.respond_to?(:name) ? step.name : step
+        underscored_step = Spinach::Support.underscore(step_name)
         if self.respond_to?(underscored_step)
           self.send(underscored_step)
         else

@@ -18,7 +18,13 @@ module Spinach
     #
     # @api public
     def message
-      "Step '#{@step.name}' not found"
+      "Step #{step_name} not found"
+    end
+
+    private
+
+    def step_name
+      @step.respond_to?(:name) ? %('#{@step.name}') : @step.inspect
     end
   end
 
@@ -39,7 +45,13 @@ module Spinach
     #
     # @api public
     def message
-      "Step '#{@step.name}' pending"
+      "Step #{step_name} pending"
+    end
+
+    private
+
+    def step_name
+      @step.respond_to?(:name) ? %('#{@step.name}') : @step.inspect
     end
   end
 end
